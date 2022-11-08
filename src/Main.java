@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 public class Main {
 
@@ -5,6 +7,7 @@ public class Main {
         // Which task to run?
         Scanner scan = new Scanner(System.in);
         int task = 0;
+
         System.out.println("Which task would you like to run?");
         System.out.println("(1) Problem 1 - Brute Force");
         System.out.println("(2) Problem 1 - Greedy");
@@ -14,8 +17,12 @@ public class Main {
         System.out.println("(6) Problem 2 - Greedy");
         System.out.println("(7) Problem 2 - Dynamic (Memoization)");
         System.out.println("(8) Problem 2 - Dynamic (Bottom Up)");
+        System.out.println("(9) Problem 3 - Brute Force");
+        System.out.println("(10) Problem 3 - Greedy");
+        System.out.println("(11) Problem 3 - Dynamic (Memoization)");
+        System.out.println("(12) Problem 3 - Dynamic (Bottom Up)");
         // Error handling
-        while (task < 1 || task > 8) {
+        while (task < 1 || task > 12) {
             task = scan.nextInt();
             if (task < 1 || task > 8) {
                 System.out.println("Please enter a valid selection 1-8.");
@@ -50,7 +57,7 @@ public class Main {
             optimal.print();
         }
         // Problem 2
-        else {
+        else if (task >= 5 && task <= 8) {
             System.out.println("Task " + task + ": Please enter data in the following format.");
             System.out.println("\tLine 1: one integer k");
             System.out.println("\tLine 2: two integers m and n separated by a space");
@@ -82,6 +89,40 @@ public class Main {
                     optimal[i].print();
                 }
             }
+        }
+        // Problem 3
+        else {
+                System.out.println("Task " + task + ": Please enter data in the following format.");
+                System.out.println("\tLine 1: one integer c");
+                System.out.println("\tLine 2: two integers m and n separated by a space");
+                System.out.println("\tLines 3...m+2: n integer prices separated by a space");
+                // Take in the input and save in stocks
+                int c = scan.nextInt();
+                int m = scan.nextInt();
+                int n = scan.nextInt();
+                int stocks[][] = new int[m][n];
+                for (int i = 0; i < m; i++) {
+                    for (int j = 0; j < n; j++) {
+                        stocks[i][j] = scan.nextInt();
+                    }
+                }
+                // Execute
+                System.out.println("Executing task (" + task + ") ...");
+                List<Transaction> optimal = new ArrayList<>();
+                switch (task) {
+                    case 9 -> Problem3.bruteForce(stocks, c);
+                    case 10 -> Problem3.greedy(stocks, c);
+                    case 11 -> Problem3.dynamicMem(stocks, c);
+                    case 12 -> Problem3.dynamicBU(stocks, c);
+                }
+                // Results
+                System.out.println("Optimal List of Transactions:");
+                for (Transaction t : optimal) {
+                    if (t.stock > 0) {
+                        System.out.print("\t");
+                        t.print();
+                    }
+                }
         }
     }
 }
