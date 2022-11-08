@@ -17,7 +17,21 @@ public class Problem1 {
     }
 
     public static Transaction greedy(int[][] stocks) {
-        throw new UnsupportedOperationException();
+        int m = stocks.length;
+        int n = stocks[0].length;
+        Transaction opt = new Transaction(0, 0, 0, 0);
+        for (int i = 0; i < m; i++) {
+            Transaction min = new Transaction(stocks[i][0], 0);
+            for (int j = 1; j < n; j++) {
+                if (stocks[i][j] < min.profit) {
+                    min = new Transaction(stocks[i][j], j);
+                }
+                else if (stocks[i][j] - min.profit > opt.profit) {
+                    opt = new Transaction(i, min.buyDay, j, stocks[i][j] - min.profit);
+                }
+            }
+        }
+        return opt;
     }
 
     public static Transaction dynamicMem(int[][] stocks) {
