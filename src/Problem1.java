@@ -42,6 +42,7 @@ public class Problem1 {
         A = new Cache(m, n);
         opt = new Transaction();
         memoize(stocks, m - 1, n - 1);
+        opt.profit = stocks[opt.stock][opt.sellDay] - stocks[opt.stock][opt.buyDay];
         return opt;
     }
     private static void memoize(int[][] stocks, int i, int j) {
@@ -72,7 +73,6 @@ public class Problem1 {
             } else { // Sell current and buy this
                 A.maxProfit[i][j] = stocks[i][j] - A.minCost[i][j - 1];
                 opt.sellDay = j;
-                opt.profit = A.maxProfit[i][j];
             }
         }
     }
@@ -103,10 +103,10 @@ public class Problem1 {
                 else { // Sell current and buy this
                     A.maxProfit[i][j] = stocks[i][j] - A.minCost[i][j - 1];
                     opt.sellDay = j;
-                    opt.profit = A.maxProfit[i][j];
                 }
             }
         }
+        opt.profit = stocks[opt.stock][opt.sellDay] - stocks[opt.stock][opt.buyDay];
         return opt;
     }
 }

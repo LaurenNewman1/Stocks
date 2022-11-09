@@ -29,4 +29,15 @@ public class Transaction {
         stock++; buyDay++; sellDay++;
         System.out.println(stock + " " + buyDay + " " + sellDay);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Transaction))
+            return false;
+        Transaction t = (Transaction) o;
+        if (this.stock == t.stock && this.buyDay == t.buyDay
+                && this.sellDay == t.sellDay && this.profit == t.profit)
+            return true;
+        return false;
+    }
 }
