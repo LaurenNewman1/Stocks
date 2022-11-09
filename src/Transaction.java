@@ -4,7 +4,12 @@ public class Transaction {
     public int sellDay;
     public int profit;
 
-    Transaction() {}
+    Transaction() {
+        this.stock = 0;
+        this.buyDay = 0;
+        this.sellDay = 0;
+        this.profit = 0;
+    }
 
     Transaction(int stock, int buyDay, int sellDay) {
         this.stock = stock;
@@ -26,8 +31,7 @@ public class Transaction {
 
     public void print() {
         // + 1 because they should see it starting with 1, not 0
-        stock++; buyDay++; sellDay++;
-        System.out.println(stock + " " + buyDay + " " + sellDay);
+        System.out.println((stock + 1) + " " + (buyDay + 1) + " " + (sellDay + 1));
     }
 
     @Override

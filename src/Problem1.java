@@ -35,14 +35,24 @@ public class Problem1 {
     }
 
     static Cache A;
-    static Transaction opt;
+    static Transaction[] opts;
     public static Transaction dynamicMem(int[][] stocks) {
         int m = stocks.length;
         int n = stocks[0].length;
         A = new Cache(m, n);
-        opt = new Transaction();
+        opts = new Transaction[m];
+        for (int i = 0; i < m; i++) {
+            opts[i] = new Transaction();
+        }
         memoize(stocks, m - 1, n - 1);
-        opt.profit = stocks[opt.stock][opt.sellDay] - stocks[opt.stock][opt.buyDay];
+        Transaction opt = opts[0];
+        for (int i = 1; i < m; i++) {
+            if (opts[i].profit > opt.profit)
+                opt = opts[i];
+        }
+        opt.print();
+        System.out.println(opt.profit);
+        A.print();
         return opt;
     }
     private static void memoize(int[][] stocks, int i, int j) {
@@ -60,19 +70,20 @@ public class Problem1 {
                 memoize(stocks, i, j - 1);
             }
             // Select the one that will be traded
-            if (A.minCost[i][j - 1] < stocks[i][j]) {
+            if (A.minCost[i][j - 1] <= stocks[i][j]) {
                 A.minCost[i][j] = A.minCost[i][j - 1];
             } else { // Buy it
                 A.minCost[i][j] = stocks[i][j];
-                opt.stock = i;
-                opt.buyDay = j;
+                opts[i].stock = i;
+                opts[i].buyDay = j;
             }
             // Select the final purhcase
-            if (A.maxProfit[i][j - 1] > stocks[i][j] - A.minCost[i][j - 1]) {
+            if (A.maxProfit[i][j - 1] >= stocks[i][j] - A.minCost[i][j - 1]) {
                 A.maxProfit[i][j] = A.maxProfit[i][j - 1];
             } else { // Sell current and buy this
                 A.maxProfit[i][j] = stocks[i][j] - A.minCost[i][j - 1];
-                opt.sellDay = j;
+                opts[i].sellDay = j;
+                opts[i].profit = A.maxProfit[i][j];
             }
         }
     }
@@ -81,32 +92,43 @@ public class Problem1 {
         int m = stocks.length;
         int n = stocks[0].length;
         Cache A = new Cache(m, n);
-        Transaction opt = new Transaction();
+        Transaction[] opts = new Transaction[m];
         for (int i = 0; i < m; i++) {
+            opts[i] = new Transaction();
             A.minCost[i][0] = stocks[i][0];
             A.maxProfit[i][0] = -1 * A.minCost[i][0];
+        }
+        for (int i = 0; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 // Select the one that will be traded
-                if (A.minCost[i][j - 1] < stocks[i][j]) {
+                if (A.minCost[i][j - 1] <= stocks[i][j]) {
                     A.minCost[i][j] = A.minCost[i][j - 1];
                 }
                 else { // Buy it
                     A.minCost[i][j] = stocks[i][j];
-                    opt.stock = i;
-                    opt.buyDay = j;
+                    opts[i].stock = i;
+                    opts[i].buyDay = j;
 
                 }
                 // Select the final purhcase
-                if (A.maxProfit[i][j - 1] > stocks[i][j] - A.minCost[i][j - 1]) {
+                if (A.maxProfit[i][j - 1] >= stocks[i][j] - A.minCost[i][j - 1]) {
                     A.maxProfit[i][j] = A.maxProfit[i][j - 1];
                 }
                 else { // Sell current and buy this
                     A.maxProfit[i][j] = stocks[i][j] - A.minCost[i][j - 1];
-                    opt.sellDay = j;
+                    opts[i].sellDay = j;
+                    opts[i].profit = A.maxProfit[i][j];
                 }
             }
         }
-        opt.profit = stocks[opt.stock][opt.sellDay] - stocks[opt.stock][opt.buyDay];
+        Transaction opt = opts[0];
+        for (int i = 1; i < m; i++) {
+            if (opts[i].profit > opt.profit)
+                opt = opts[i];
+        }
+        opt.print();
+        System.out.println(opt.profit);
+        A.print();
         return opt;
     }
 }
