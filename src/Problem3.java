@@ -6,15 +6,15 @@ public class Problem3 {
         throw new UnsupportedOperationException();
     }
 
-    public static List<Transaction> greedy(int[][] stocks, int c) {
+    public static List<Transaction> dynamic1(int[][] stocks, int c) {
         throw new UnsupportedOperationException();
     }
 
-    public static List<Transaction> dynamicMem(int[][] stocks, int c) {
+    public static List<Transaction> dynamic2Mem(int[][] stocks, int c) {
         throw new UnsupportedOperationException();
     }
 
-    public static List<Transaction> dynamicBU(int[][] stocks, int c) {
+    public static List<Transaction> dynamic2BU(int[][] stocks, int c) {
         throw new UnsupportedOperationException();
     }
 }

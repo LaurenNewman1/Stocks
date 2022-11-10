@@ -9,18 +9,18 @@ public class Main {
         int task = 0;
 
         System.out.println("Which task would you like to run?");
-        System.out.println("(1) Problem 1 - Brute Force");
-        System.out.println("(2) Problem 1 - Greedy");
-        System.out.println("(3) Problem 1 - Dynamic (Memoization)");
-        System.out.println("(4) Problem 1 - Dynamic (Bottom Up)");
-        System.out.println("(5) Problem 2 - Brute Force");
-        System.out.println("(6) Problem 2 - Greedy");
-        System.out.println("(7) Problem 2 - Dynamic (Memoization)");
-        System.out.println("(8) Problem 2 - Dynamic (Bottom Up)");
-        System.out.println("(9) Problem 3 - Brute Force");
-        System.out.println("(10) Problem 3 - Greedy");
-        System.out.println("(11) Problem 3 - Dynamic (Memoization)");
-        System.out.println("(12) Problem 3 - Dynamic (Bottom Up)");
+        System.out.println("(1) Problem 1 - Brute Force Θ(m ∗ n2) ");
+        System.out.println("(2) Problem 1 - Greedy Θ(m ∗ n)");
+        System.out.println("(3) Problem 1 - Dynamic (Memoization) Θ(m ∗ n)");
+        System.out.println("(4) Problem 1 - Dynamic (Bottom Up) Θ(m ∗ n)");
+        System.out.println("(5) Problem 2 - Brute Force Θ(m ∗ n2k)");
+        System.out.println("(6) Problem 2 - Dynamic 1 Θ(m ∗ n2 ∗ k)");
+        System.out.println("(7) Problem 2 - Dynamic 2 (Memoization) Θ(m ∗ n ∗ k)");
+        System.out.println("(8) Problem 2 - Dynamic 2 (Bottom Up) Θ(m ∗ n ∗ k)");
+        System.out.println("(9) Problem 3 - Brute Force Θ(m ∗ 2n)");
+        System.out.println("(10) Problem 3 - Dynamic 1 Θ(m ∗ n2)");
+        System.out.println("(11) Problem 3 - Dynamic 2 (Memoization) Θ(m ∗ n)");
+        System.out.println("(12) Problem 3 - Dynamic 2 (Bottom Up) Θ(m ∗ n)");
         // Error handling
         while (task < 1 || task > 12) {
             task = scan.nextInt();
@@ -77,9 +77,9 @@ public class Main {
             Transaction[] optimal = new Transaction[k];
             switch (task) {
                 case 5 -> Problem2.bruteForce(stocks, k);
-                case 6 -> Problem2.greedy(stocks, k);
-                case 7 -> Problem2.dynamicMem(stocks, k);
-                case 8 -> Problem2.dynamicBU(stocks, k);
+                case 6 -> Problem2.dynamic1(stocks, k);
+                case 7 -> Problem2.dynamic2Mem(stocks, k);
+                case 8 -> Problem2.dynamic2BU(stocks, k);
             }
             // Results
             System.out.println("Optimal List of Transactions:");
@@ -111,9 +111,9 @@ public class Main {
                 List<Transaction> optimal = new ArrayList<>();
                 switch (task) {
                     case 9 -> Problem3.bruteForce(stocks, c);
-                    case 10 -> Problem3.greedy(stocks, c);
-                    case 11 -> Problem3.dynamicMem(stocks, c);
-                    case 12 -> Problem3.dynamicBU(stocks, c);
+                    case 10 -> Problem3.dynamic1(stocks, c);
+                    case 11 -> Problem3.dynamic2Mem(stocks, c);
+                    case 12 -> Problem3.dynamic2BU(stocks, c);
                 }
                 // Results
                 System.out.println("Optimal List of Transactions:");

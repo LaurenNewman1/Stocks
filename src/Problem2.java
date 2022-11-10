@@ -4,15 +4,15 @@ public class Problem2 {
         throw new UnsupportedOperationException();
     }
 
-    public static Transaction[] greedy(int[][] stocks, int k) {
+    public static Transaction[] dynamic1(int[][] stocks, int k) {
         throw new UnsupportedOperationException();
     }
 
-    public static Transaction[] dynamicMem(int[][] stocks, int k) {
+    public static Transaction[] dynamic2Mem(int[][] stocks, int k) {
         throw new UnsupportedOperationException();
     }
 
-    public static Transaction[] dynamicBU(int[][] stocks, int k) {
+    public static Transaction[] dynamic2BU(int[][] stocks, int k) {
         throw new UnsupportedOperationException();
     }
 }

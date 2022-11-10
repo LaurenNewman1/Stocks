@@ -41,40 +41,45 @@ public class JUnitTests {
         runAllProblem1(stocks, expected);
     }
 
+    int[][] getRandomStocks(int m, int n) {
+        int[][] stocks = new int[m][n];
+        Random rand = new Random();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                stocks[i][j] = rand.nextInt(100) + 1;
+            }
+        }
+        return stocks;
+    }
+
     void evaluate_prob1(int m[], int n[]) {
         long bruteTime[] = new long[5];
         long greedyTime[] = new long[5];
         long dynamicMemTime[] = new long[5];
         long dynamicBUTime[] = new long[5];
-        Random rand = new Random();
-        for (int k = 0; k < 5; k++) {
+        for (int i = 0; i < 5; i++) {
             // Setup randomized stocks
-            int[][] stocks = new int[m[k]][n[k]];
-            for (int i = 0; i < m[k]; i++) {
-                for (int j = 0; j < n[k]; j++) {
-                    stocks[i][j] = rand.nextInt(100) + 1;
-                }
-            }
+            int[][] stocks = getRandomStocks(m[i], n[i]);
             // Brute Force
             long start = System.nanoTime();
             Problem1.bruteForce(stocks);
             long finish = System.nanoTime();
-            bruteTime[k] = finish - start;
+            bruteTime[i] = finish - start;
             // Greedy
             start = System.nanoTime();
             Problem1.greedy(stocks);
             finish = System.nanoTime();
-            greedyTime[k] = finish - start;
+            greedyTime[i] = finish - start;
             // Dynamic Memoization
             start = System.nanoTime();
             Problem1.dynamicMem(stocks);
             finish = System.nanoTime();
-            dynamicMemTime[k] = finish - start;
+            dynamicMemTime[i] = finish - start;
             // Dynamic Bottom Up
             start = System.nanoTime();
             Problem1.dynamicBU(stocks);
             finish = System.nanoTime();
-            dynamicBUTime[k] = finish - start;
+            dynamicBUTime[i] = finish - start;
         }
         System.out.println("Brute force times: ");
         for (long time : bruteTime)
@@ -99,9 +104,135 @@ public class JUnitTests {
 
     @Test
     void p1_evaluation_plot2() {
-        int n[] = {10, 10, 10, 10, 10};
         int m[] = {100, 200, 300, 400, 500};
+        int n[] = {10, 10, 10, 10, 10};
         evaluate_prob1(m, n);
+    }
+
+    void evaluate_prob2(int m[], int n[], int k[]) {
+        long bruteTime[] = new long[5];
+        long dynamic1Time[] = new long[5];
+        long dynamic2MemTime[] = new long[5];
+        long dynamic2BUTime[] = new long[5];
+        for (int i = 0; i < 5; i++) {
+            // Setup randomized stocks
+            int[][] stocks = getRandomStocks(m[i], n[i]);
+            // Brute Force
+            long start = System.nanoTime();
+            Problem2.bruteForce(stocks, k[i]);
+            long finish = System.nanoTime();
+            bruteTime[i] = finish - start;
+            // Dynamic 1
+            start = System.nanoTime();
+            Problem2.dynamic1(stocks, k[i]);
+            finish = System.nanoTime();
+            dynamic1Time[i] = finish - start;
+            // Dynamic 2 Memoization
+            start = System.nanoTime();
+            Problem2.dynamic2Mem(stocks, k[i]);
+            finish = System.nanoTime();
+            dynamic2MemTime[i] = finish - start;
+            // Dynamic 2 Bottom Up
+            start = System.nanoTime();
+            Problem2.dynamic2BU(stocks, k[i]);
+            finish = System.nanoTime();
+            dynamic2BUTime[i] = finish - start;
+        }
+        System.out.println("Brute force times: ");
+        for (long time : bruteTime)
+            System.out.print(time + " ");
+        System.out.println("\nDynamic 1 times: ");
+        for (long time : dynamic1Time)
+            System.out.print(time + " ");
+        System.out.println("\nDynamic 2 Mem times: ");
+        for (long time : dynamic2MemTime)
+            System.out.print(time + " ");
+        System.out.println("\nDynamic 2 BU times: ");
+        for (long time : dynamic2BUTime)
+            System.out.print(time + " ");
+    }
+
+    @Test
+    void p2_evaluation_plot1() {
+        int m[] = {10, 10, 10, 10, 10};
+        int n[] = {100, 200, 300, 400, 500};
+        int k[] = {10, 10, 10, 10, 10};
+        evaluate_prob2(m, n, k);
+    }
+
+    @Test
+    void p2_evaluation_plot2() {
+        int m[] = {100, 200, 300, 400, 500};
+        int n[] = {10, 10, 10, 10, 10};
+        int k[] = {10, 10, 10, 10, 10};
+        evaluate_prob2(m, n, k);
+    }
+
+    @Test
+    void p2_evaluation_plot3() {
+        int m[] = {100, 100, 100, 100, 100};
+        int n[] = {100, 100, 100, 100, 100};
+        int k[] = {10, 30, 50, 70, 90};
+        evaluate_prob2(m, n, k);
+    }
+
+    void evaluate_prob3(int m[], int n[], int c[]) {
+        long bruteTime[] = new long[5];
+        long dynamic1Time[] = new long[5];
+        long dynamic2MemTime[] = new long[5];
+        long dynamic2BUTime[] = new long[5];
+        for (int i = 0; i < 5; i++) {
+            // Setup randomized stocks
+            int[][] stocks = getRandomStocks(m[i], n[i]);
+            // Brute Force
+            long start = System.nanoTime();
+            Problem3.bruteForce(stocks, c[i]);
+            long finish = System.nanoTime();
+            bruteTime[i] = finish - start;
+            // Dynamic 1
+            start = System.nanoTime();
+            Problem3.dynamic1(stocks, c[i]);
+            finish = System.nanoTime();
+            dynamic1Time[i] = finish - start;
+            // Dynamic 2 Memoization
+            start = System.nanoTime();
+            Problem3.dynamic2Mem(stocks, c[i]);
+            finish = System.nanoTime();
+            dynamic2MemTime[i] = finish - start;
+            // Dynamic 2 Bottom Up
+            start = System.nanoTime();
+            Problem3.dynamic2BU(stocks, c[i]);
+            finish = System.nanoTime();
+            dynamic2BUTime[i] = finish - start;
+        }
+        System.out.println("Brute force times: ");
+        for (long time : bruteTime)
+            System.out.print(time + " ");
+        System.out.println("\nDynamic 1 times: ");
+        for (long time : dynamic1Time)
+            System.out.print(time + " ");
+        System.out.println("\nDynamic 2 Mem times: ");
+        for (long time : dynamic2MemTime)
+            System.out.print(time + " ");
+        System.out.println("\nDynamic 2 BU times: ");
+        for (long time : dynamic2BUTime)
+            System.out.print(time + " ");
+    }
+
+    @Test
+    void p3_evaluation_plot1() {
+        int m[] = {10, 10, 10, 10, 10};
+        int n[] = {100, 200, 300, 400, 500};
+        int c[] = {10, 10, 10, 10, 10};
+        evaluate_prob3(m, n, c);
+    }
+
+    @Test
+    void p3_evaluation_plot2() {
+        int m[] = {100, 200, 300, 400, 500};
+        int n[] = {10, 10, 10, 10, 10};
+        int c[] = {10, 10, 10, 10, 10};
+        evaluate_prob3(m, n, c);
     }
 
 }
