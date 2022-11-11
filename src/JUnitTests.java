@@ -13,6 +13,15 @@ public class JUnitTests {
         assertTransaction(expected, Problem1.dynamicMem(input));
     }
 
+    void runAllProblem2(int input[][], int k, Transaction[] expected) {
+        Transaction[] actual = Problem2.bruteForce(input, k);
+        for (int i = 0; i < actual.length; i++)
+            assertTransaction(expected[i], actual[i]);
+        //assertTransaction(expected, Problem1.greedy(input));
+        //assertTransaction(expected, Problem1.dynamicBU(input));
+        //assertTransaction(expected, Problem1.dynamicMem(input));
+    }
+
     void assertTransaction(Transaction a, Transaction b) {
         assertEquals(a.stock, b.stock);
         assertEquals(a.buyDay, b.buyDay);
@@ -39,6 +48,22 @@ public class JUnitTests {
         };
         Transaction expected = new Transaction(0, 1, 3, 8);
         runAllProblem1(stocks, expected);
+    }
+
+    @Test
+    void p2_test2() {
+        int k = 3;
+        int stocks[][] = {
+                { 5, 2, 6, 10, 2, 8, 7, 9 },
+                { 2, 1, 5, 3, 9, 9, 5, 8},
+                { 1, 2, 3, 4, 3, 2, 5, 1}
+        };
+        Transaction[] expected = {
+                new Transaction(0, 1, 3, 8),
+                new Transaction(1, 3, 4,6),
+                new Transaction(0, 4, 7, 7)
+        };
+        runAllProblem2(stocks, k, expected);
     }
 
     int[][] getRandomStocks(int m, int n) {

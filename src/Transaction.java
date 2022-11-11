@@ -44,4 +44,13 @@ public class Transaction {
             return true;
         return false;
     }
+
+    public static int getProfit(Transaction[] list) {
+        int total = 0;
+        for (Transaction t : list) {
+            if (t != null)
+                total += t.profit;
+        }
+        return total;
+    }
 }

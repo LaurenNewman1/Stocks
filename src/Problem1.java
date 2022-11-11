@@ -39,20 +39,20 @@ public class Problem1 {
     public static Transaction dynamicMem(int[][] stocks) {
         int m = stocks.length;
         int n = stocks[0].length;
+        // Init
         A = new Cache(m, n);
         opts = new Transaction[m];
         for (int i = 0; i < m; i++) {
             opts[i] = new Transaction();
         }
+        // Recursive
         memoize(stocks, m - 1, n - 1);
+        // Find single optimal over all the stocks
         Transaction opt = opts[0];
         for (int i = 1; i < m; i++) {
             if (opts[i].profit > opt.profit)
                 opt = opts[i];
         }
-        opt.print();
-        System.out.println(opt.profit);
-        A.print();
         return opt;
     }
     private static void memoize(int[][] stocks, int i, int j) {
