@@ -51,6 +51,20 @@ public class JUnitTests {
     }
 
     @Test
+    void p2_test1() {
+        int k = 2;
+        int stocks[][] = {
+                { 1, 8, 9 },
+                { 1, 2, 3}
+        };
+        Transaction[] expected = {
+                new Transaction(0, 0, 1, 7),
+                new Transaction(1, 1, 2, 1)
+        };
+        runAllProblem2(stocks, k, expected);
+    }
+
+    @Test
     void p2_test2() {
         int k = 3;
         int stocks[][] = {
@@ -59,9 +73,23 @@ public class JUnitTests {
                 { 1, 2, 3, 4, 3, 2, 5, 1}
         };
         Transaction[] expected = {
-                new Transaction(0, 1, 3, 8),
+                new Transaction(0, 4, 7, 7),
                 new Transaction(1, 3, 4,6),
-                new Transaction(0, 4, 7, 7)
+                new Transaction(0, 1, 3, 8)
+        };
+        runAllProblem2(stocks, k, expected);
+    }
+
+    @Test
+    void p2_test3() {
+        int k = 2;
+        int stocks[][] = {
+                { 1, 5, 1},
+                { 1, 1, 6}
+        };
+        Transaction[] expected = {
+                new Transaction(1, 1, 2,5),
+                new Transaction(0, 0, 1, 4)
         };
         runAllProblem2(stocks, k, expected);
     }
