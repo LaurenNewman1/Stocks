@@ -9,18 +9,18 @@ public class Main {
         int task = 0;
 
         System.out.println("Which task would you like to run?");
-        System.out.println("(1) Problem 1 - Brute Force Θ(m ∗ n2) ");
-        System.out.println("(2) Problem 1 - Greedy Θ(m ∗ n)");
-        System.out.println("(3) Problem 1 - Dynamic (Memoization) Θ(m ∗ n)");
-        System.out.println("(4) Problem 1 - Dynamic (Bottom Up) Θ(m ∗ n)");
-        System.out.println("(5) Problem 2 - Brute Force Θ(m ∗ n2k)");
-        System.out.println("(6) Problem 2 - Dynamic 1 Θ(m ∗ n2 ∗ k)");
-        System.out.println("(7) Problem 2 - Dynamic 2 (Memoization) Θ(m ∗ n ∗ k)");
-        System.out.println("(8) Problem 2 - Dynamic 2 (Bottom Up) Θ(m ∗ n ∗ k)");
-        System.out.println("(9) Problem 3 - Brute Force Θ(m ∗ 2n)");
-        System.out.println("(10) Problem 3 - Dynamic 1 Θ(m ∗ n2)");
-        System.out.println("(11) Problem 3 - Dynamic 2 (Memoization) Θ(m ∗ n)");
-        System.out.println("(12) Problem 3 - Dynamic 2 (Bottom Up) Θ(m ∗ n)");
+        System.out.println("(1) ALG1 - Problem 1 - Brute Force Θ(m ∗ n2) ");
+        System.out.println("(2) ALG2 - Problem 1 - Greedy Θ(m ∗ n)");
+        System.out.println("(3) ALG3A - Problem 1 - Dynamic (Memoization) Θ(m ∗ n)");
+        System.out.println("(4) ALG3B - Problem 1 - Dynamic (Bottom Up) Θ(m ∗ n)");
+        System.out.println("(5) ALG4 - Problem 2 - Brute Force Θ(m ∗ n2k)");
+        System.out.println("(6) ALG5 - Problem 2 - Dynamic 1 Θ(m ∗ n2 ∗ k)");
+        System.out.println("(7) ALG6A - Problem 2 - Dynamic 2 (Memoization) Θ(m ∗ n ∗ k)");
+        System.out.println("(8) ALG6B - Problem 2 - Dynamic 2 (Bottom Up) Θ(m ∗ n ∗ k)");
+        System.out.println("(9) ALG7 - Problem 3 - Brute Force Θ(m ∗ 2n)");
+        System.out.println("(10) ALG8 - Problem 3 - Dynamic 1 Θ(m ∗ n2)");
+        System.out.println("(11) ALG9A - Problem 3 - Dynamic 2 (Memoization) Θ(m ∗ n)");
+        System.out.println("(12) ALG9B - Problem 3 - Dynamic 2 (Bottom Up) Θ(m ∗ n)");
         // Error handling
         while (task < 1 || task > 12) {
             task = scan.nextInt();

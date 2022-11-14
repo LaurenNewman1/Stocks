@@ -17,12 +17,15 @@ public class JUnitTests {
 //        Transaction[] actual = Problem2.bruteForce(input, k);
 //        for (int i = 0; i < actual.length; i++)
 //            assertTransaction(expected[i], actual[i]);
-        Transaction[] actual = Problem2.dynamic1(input, k);
+//        Transaction[] actual = Problem2.dynamic1(input, k);
+//        for (int i = 0; i < actual.length; i++)
+//            assertTransaction(expected[i], actual[i]);
+        Transaction[] actual = Problem2.dynamic2BU(input, k);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
-        //assertTransaction(expected, Problem1.greedy(input));
-        //assertTransaction(expected, Problem1.dynamicBU(input));
-        //assertTransaction(expected, Problem1.dynamicMem(input));
+//        Transaction[] actual = Problem2.dynamic2Mem(input, k);
+//        for (int i = 0; i < actual.length; i++)
+//            assertTransaction(expected[i], actual[i]);
     }
 
     void assertTransaction(Transaction a, Transaction b) {
