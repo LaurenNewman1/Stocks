@@ -14,7 +14,10 @@ public class JUnitTests {
     }
 
     void runAllProblem2(int input[][], int k, Transaction[] expected) {
-        Transaction[] actual = Problem2.bruteForce(input, k);
+//        Transaction[] actual = Problem2.bruteForce(input, k);
+//        for (int i = 0; i < actual.length; i++)
+//            assertTransaction(expected[i], actual[i]);
+        Transaction[] actual = Problem2.dynamic1(input, k);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
         //assertTransaction(expected, Problem1.greedy(input));
@@ -23,6 +26,10 @@ public class JUnitTests {
     }
 
     void assertTransaction(Transaction a, Transaction b) {
+        System.out.print("Expected: ");
+        a.print();
+        System.out.print("Actual: ");
+        b.print();
         assertEquals(a.stock, b.stock);
         assertEquals(a.buyDay, b.buyDay);
         assertEquals(a.sellDay, b.sellDay);
@@ -31,6 +38,7 @@ public class JUnitTests {
 
     @Test
     void p1_test1() {
+        // Don't use this test --  multiple correct answers
         int stocks[][] = {
                 { 1, 8, 9 },
                 { 1, 2, 3}
