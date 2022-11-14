@@ -1,28 +1,17 @@
 public class Problem2 {
 
-    static class Pair {
-        public Transaction[] transList;
-        public int profit;
-
-        Pair(int profit, Transaction[] transList) {
-            this.profit = profit;
-            this.transList = transList;
-        }
-    }
-
     public static Transaction[] bruteForce(int[][] stocks, int k) {
-        Pair opt = bruteRecur(stocks, 0, k, 0,  0, new Transaction[k], new Transaction[k]);
-        for (Transaction t : opt.transList)
+        Transaction[] opt = bruteRecur(stocks, 0, k, 0, new Transaction[k], new Transaction[k]);
+        for (Transaction t : opt)
             t.print();
-        return opt.transList;
+        return opt;
     }
-    private static Pair bruteRecur(int[][] stocks, int lastSellDay, int k, int profit, int soFar, Transaction[] txns, Transaction[] finTxns) {
+    private static Transaction[] bruteRecur(int[][] stocks, int lastSellDay, int k, int soFar, Transaction[] txns, Transaction[] finTxns) {
         if (k == 0) {
-            if (soFar > profit) {
+            if (soFar > Transaction.getProfit(finTxns)) {
                 finTxns = txns.clone();
-                profit = soFar;
             }
-            return new Pair(profit, finTxns);
+            return finTxns;
         }
         int m = stocks.length;
         int n = stocks[0].length;
@@ -35,12 +24,10 @@ public class Problem2 {
                     }
                 }
                 txns[k - 1] = maxTrans;
-                Pair pair = bruteRecur(stocks, j2, k - 1, profit, soFar + maxTrans.profit, txns, finTxns);
-                profit = pair.profit;
-                finTxns = pair.transList;
+                finTxns = bruteRecur(stocks, j2, k - 1, soFar + maxTrans.profit, txns, finTxns);
             }
         }
-        return new Pair(profit, finTxns);
+        return finTxns;
     }
 
     public static Transaction[] dynamic1(int[][] stocks, int k) {

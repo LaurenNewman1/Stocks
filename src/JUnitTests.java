@@ -58,8 +58,8 @@ public class JUnitTests {
                 { 1, 2, 3}
         };
         Transaction[] expected = {
-                new Transaction(0, 0, 1, 7),
-                new Transaction(1, 1, 2, 1)
+                new Transaction(0, 1, 2, 1),
+                new Transaction(0, 0, 1, 7)
         };
         runAllProblem2(stocks, k, expected);
     }
