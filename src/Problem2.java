@@ -60,8 +60,54 @@ public class Problem2 {
         return traverseFromLast(dpTxn, k);
     }
 
+    static Cache A;
     public static Transaction[] dynamic2Mem(int[][] stocks, int k) {
-        throw new UnsupportedOperationException();
+        int m = stocks.length;
+        int n = stocks[0].length;
+        // Init
+        A = new Cache(k + 1, n);
+        // Recursive
+        memoize(stocks, k);
+        // Find optimal over the table
+        return traverseFromLast(A.dpTxn, k);
+    }
+
+    private static void memoize(int[][] stocks, int k) {
+        if (k == 0) {
+            return;
+        }
+        else {
+            int m = stocks.length;
+            int n = stocks[0].length;
+            memoize(stocks, k - 1);
+            int[] maxDiff = new int[m];
+            int[] maxDiffDay = new int[m];
+            for (int i = 0; i < m; i++)
+                maxDiff[i] = -1 * stocks[i][0];
+            for (int j = 1; j < n; j++) {
+                int totProfit = 0;
+                Transaction maxTrans = new Transaction();
+                for (int i = 0; i < m; i++) {
+                    int currProfit = stocks[i][j] + maxDiff[i];
+                    if (currProfit > totProfit) {
+                        totProfit = currProfit;
+                        maxTrans = new Transaction(i, maxDiffDay[i], j, stocks[i][j] - stocks[i][maxDiffDay[i]], new int[]{k - 1, maxDiffDay[i]});
+                    }
+                    int currDiff = A.maxProfit[k - 1][j] - stocks[i][j];
+                    if (currDiff > maxDiff[i]) {
+                        maxDiff[i] = currDiff;
+                        maxDiffDay[i] = j;
+                    }
+                }
+                if (totProfit > A.maxProfit[k][j - 1]) {
+                    A.maxProfit[k][j] = totProfit;
+                    A.dpTxn[k][j] = maxTrans;
+                } else {
+                    A.maxProfit[k][j] = A.maxProfit[k][j - 1];
+                    A.dpTxn[k][j] = A.dpTxn[k][j - 1];
+                }
+            }
+        }
     }
 
     public static Transaction[] dynamic2BU(int[][] stocks, int k) {

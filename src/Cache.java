@@ -1,12 +1,14 @@
 public class Cache {
     int[][] minCost;
     int[][] maxProfit;
+    Transaction[][] dpTxn;
     int m;
     int n;
 
     Cache(int m, int n) {
         minCost = new int[m][n];
         maxProfit = new int[m][n];
+        dpTxn = new Transaction[m][n];
         this.m = m;
         this.n = n;
     }

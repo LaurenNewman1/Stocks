@@ -20,12 +20,12 @@ public class JUnitTests {
 //        Transaction[] actual = Problem2.dynamic1(input, k);
 //        for (int i = 0; i < actual.length; i++)
 //            assertTransaction(expected[i], actual[i]);
-        Transaction[] actual = Problem2.dynamic2BU(input, k);
-        for (int i = 0; i < actual.length; i++)
-            assertTransaction(expected[i], actual[i]);
-//        Transaction[] actual = Problem2.dynamic2Mem(input, k);
+//        Transaction[] actual = Problem2.dynamic2BU(input, k);
 //        for (int i = 0; i < actual.length; i++)
 //            assertTransaction(expected[i], actual[i]);
+        Transaction[] actual = Problem2.dynamic2Mem(input, k);
+        for (int i = 0; i < actual.length; i++)
+            assertTransaction(expected[i], actual[i]);
     }
 
     void assertTransaction(Transaction a, Transaction b) {
@@ -41,7 +41,6 @@ public class JUnitTests {
 
     @Test
     void p1_test1() {
-        // Don't use this test --  multiple correct answers
         int stocks[][] = {
                 { 1, 8, 9 },
                 { 1, 2, 3}
@@ -63,14 +62,13 @@ public class JUnitTests {
 
     @Test
     void p2_test1() {
-        int k = 2;
+        int k = 1;
         int stocks[][] = {
                 { 1, 8, 9 },
                 { 1, 2, 3}
         };
         Transaction[] expected = {
-                new Transaction(0, 1, 2, 1),
-                new Transaction(0, 0, 1, 7)
+                new Transaction(0, 0, 2, 8)
         };
         runAllProblem2(stocks, k, expected);
     }
