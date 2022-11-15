@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Transaction {
     public int stock;
     public int buyDay;
@@ -50,6 +52,15 @@ public class Transaction {
     }
 
     public static int getProfit(Transaction[] list) {
+        int total = 0;
+        for (Transaction t : list) {
+            if (t != null)
+                total += t.profit;
+        }
+        return total;
+    }
+
+    public static int getProfit(List<Transaction> list) {
         int total = 0;
         for (Transaction t : list) {
             if (t != null)

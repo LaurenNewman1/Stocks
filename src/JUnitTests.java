@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,6 +28,21 @@ public class JUnitTests {
         actual = Problem2.dynamic2Mem(input, k);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
+    }
+
+    void runAllProblem3(int input[][], int c, List<Transaction> expected) {
+        List<Transaction> actual = Problem3.bruteForce(input, c);
+        for (int i = 0; i < actual.size(); i++)
+            assertTransaction(expected.get(i), actual.get(i));
+//        actual = Problem3.dynamic1(input, c);
+//        for (int i = 0; i < actual.size(); i++)
+//            assertTransaction(expected.get(i), actual.get(i));
+//        actual = Problem3.dynamic2BU(input, c);
+//        for (int i = 0; i < actual.size(); i++)
+//            assertTransaction(expected.get(i), actual.get(i));
+//        actual = Problem3.dynamic2Mem(input, c);
+//        for (int i = 0; i < actual.size(); i++)
+//            assertTransaction(expected.get(i), actual.get(i));
     }
 
     void assertTransaction(Transaction a, Transaction b) {
@@ -101,6 +118,49 @@ public class JUnitTests {
                 new Transaction(0, 0, 1, 4)
         };
         runAllProblem2(stocks, k, expected);
+    }
+
+    @Test
+    void p3_test2() {
+        int c = 0;
+        int stocks[][] = {
+                { 5, 2, 6, 10, 2},
+                { 2, 1, 5, 3, 9},
+                { 1, 2, 3, 4, 3}
+        };
+        List<Transaction> expected = new ArrayList<>();
+        expected.add(new Transaction(2, 0, 1, 1));
+        expected.add(new Transaction(0, 1, 2,4));
+        expected.add(new Transaction(0, 2, 3, 4));
+        expected.add(new Transaction(1, 3, 4, 7));
+        runAllProblem3(stocks, c, expected);
+    }
+
+    @Test
+    void p3_test3() {
+        int c = 0;
+        int stocks[][] = {
+                { 1, 5, 1},
+                { 1, 1, 6}
+        };
+        List<Transaction> expected = new ArrayList<>();
+        expected.add(new Transaction(0, 0, 1, 4));
+        expected.add(new Transaction(1, 1, 2,5));
+        runAllProblem3(stocks, c, expected);
+    }
+
+    @Test
+    void p3_test4() {
+        int c = 2;
+        int stocks[][] = {
+                {5, 2, 6, 10, 2, 8, 7, 9},
+                {2, 1, 5, 3, 10, 9, 5, 8},
+                {1, 2, 3, 4, 3, 2, 5, 1}
+        };
+        List<Transaction> expected = new ArrayList<>();
+        expected.add(new Transaction(1, 6, 7,3));
+        expected.add(new Transaction(1, 1, 4, 9));
+        runAllProblem3(stocks, c, expected);
     }
 
     int[][] getRandomStocks(int m, int n) {

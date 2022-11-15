@@ -6,35 +6,12 @@ public class Main {
     public static void main(String[] args) {
         // Which task to run?
         Scanner scan = new Scanner(System.in);
-        int task = 0;
+        String task = args[0];
 
-        System.out.println("Which task would you like to run?");
-        System.out.println("(1) ALG1 - Problem 1 - Brute Force Θ(m ∗ n2) ");
-        System.out.println("(2) ALG2 - Problem 1 - Greedy Θ(m ∗ n)");
-        System.out.println("(3) ALG3A - Problem 1 - Dynamic (Memoization) Θ(m ∗ n)");
-        System.out.println("(4) ALG3B - Problem 1 - Dynamic (Bottom Up) Θ(m ∗ n)");
-        System.out.println("(5) ALG4 - Problem 2 - Brute Force Θ(m ∗ n2k)");
-        System.out.println("(6) ALG5 - Problem 2 - Dynamic 1 Θ(m ∗ n2 ∗ k)");
-        System.out.println("(7) ALG6A - Problem 2 - Dynamic 2 (Memoization) Θ(m ∗ n ∗ k)");
-        System.out.println("(8) ALG6B - Problem 2 - Dynamic 2 (Bottom Up) Θ(m ∗ n ∗ k)");
-        System.out.println("(9) ALG7 - Problem 3 - Brute Force Θ(m ∗ 2n)");
-        System.out.println("(10) ALG8 - Problem 3 - Dynamic 1 Θ(m ∗ n2)");
-        System.out.println("(11) ALG9A - Problem 3 - Dynamic 2 (Memoization) Θ(m ∗ n)");
-        System.out.println("(12) ALG9B - Problem 3 - Dynamic 2 (Bottom Up) Θ(m ∗ n)");
-        // Error handling
-        while (task < 1 || task > 12) {
-            task = scan.nextInt();
-            if (task < 1 || task > 8) {
-                System.out.println("Please enter a valid selection 1-8.");
-            }
-        }
         // Problem 1
-        if (task <= 4){
-            System.out.println("Task " + task + ": Please enter data in the following format.");
-            System.out.println("\tLine 1: two integers m and n separated by a space");
-            System.out.println("\tLines 2...m+1: n integer prices separated by a space");
+        if (task.equals("1") || task.equals("2") || task.equals("3a") || task.equals("3b")){
             // Take in the input and save in stocks
-            int m = scan.nextInt(); // TODO I assume we don't need error handling to check input format?
+            int m = scan.nextInt();
             int n = scan.nextInt();
             int stocks[][] = new int[m][n];
             for (int i = 0; i < m; i++) {
@@ -43,25 +20,26 @@ public class Main {
                 }
             }
             // Execute
-            System.out.println("Executing task (" + task + ") ...");
             Transaction optimal = new Transaction();
             switch (task) {
-                case 1 -> optimal = Problem1.bruteForce(stocks);
-                case 2 -> optimal = Problem1.greedy(stocks);
-                case 3 -> optimal = Problem1.dynamicMem(stocks);
-                case 4 -> optimal = Problem1.dynamicBU(stocks);
+                case "1":
+                    optimal = Problem1.bruteForce(stocks);
+                    break;
+                case "2":
+                    optimal = Problem1.greedy(stocks);
+                    break;
+                case "3a":
+                    optimal = Problem1.dynamicMem(stocks);
+                    break;
+                case "3b":
+                    optimal = Problem1.dynamicBU(stocks);
+                    break;
             }
             // Results
-            System.out.println("Optimal Transaction:");
-            System.out.print("\t");
             optimal.print();
         }
         // Problem 2
-        else if (task >= 5 && task <= 8) {
-            System.out.println("Task " + task + ": Please enter data in the following format.");
-            System.out.println("\tLine 1: one integer k");
-            System.out.println("\tLine 2: two integers m and n separated by a space");
-            System.out.println("\tLines 3...m+2: n integer prices separated by a space");
+        else if (task.equals("4") || task.equals("5") || task.equals("6a") || task.equals("6b")){
             // Take in the input and save in stocks
             int k = scan.nextInt();
             int m = scan.nextInt();
@@ -73,29 +51,30 @@ public class Main {
                 }
             }
             // Execute
-            System.out.println("Executing task (" + task + ") ...");
             Transaction[] optimal = new Transaction[k];
             switch (task) {
-                case 5 -> Problem2.bruteForce(stocks, k);
-                case 6 -> Problem2.dynamic1(stocks, k);
-                case 7 -> Problem2.dynamic2Mem(stocks, k);
-                case 8 -> Problem2.dynamic2BU(stocks, k);
+                case "4":
+                    Problem2.bruteForce(stocks, k);
+                    break;
+                case "5":
+                    Problem2.dynamic1(stocks, k);
+                    break;
+                case "6a":
+                    Problem2.dynamic2Mem(stocks, k);
+                    break;
+                case "6b":
+                    Problem2.dynamic2BU(stocks, k);
+                    break;
             }
             // Results
-            System.out.println("Optimal List of Transactions:");
             for (int i = 0; i < k; i++) {
                 if (optimal[i].stock > 0) {
-                    System.out.print("\t");
                     optimal[i].print();
                 }
             }
         }
         // Problem 3
-        else {
-                System.out.println("Task " + task + ": Please enter data in the following format.");
-                System.out.println("\tLine 1: one integer c");
-                System.out.println("\tLine 2: two integers m and n separated by a space");
-                System.out.println("\tLines 3...m+2: n integer prices separated by a space");
+        else if (task.equals("7") || task.equals("8") || task.equals("9a") || task.equals("9b")){
                 // Take in the input and save in stocks
                 int c = scan.nextInt();
                 int m = scan.nextInt();
@@ -107,22 +86,30 @@ public class Main {
                     }
                 }
                 // Execute
-                System.out.println("Executing task (" + task + ") ...");
                 List<Transaction> optimal = new ArrayList<>();
                 switch (task) {
-                    case 9 -> Problem3.bruteForce(stocks, c);
-                    case 10 -> Problem3.dynamic1(stocks, c);
-                    case 11 -> Problem3.dynamic2Mem(stocks, c);
-                    case 12 -> Problem3.dynamic2BU(stocks, c);
+                    case "7":
+                        Problem3.bruteForce(stocks, c);
+                        break;
+                    case "8":
+                        Problem3.dynamic1(stocks, c);
+                        break;
+                    case "9a":
+                        Problem3.dynamic2Mem(stocks, c);
+                        break;
+                    case "9b":
+                        Problem3.dynamic2BU(stocks, c);
+                        break;
                 }
                 // Results
-                System.out.println("Optimal List of Transactions:");
                 for (Transaction t : optimal) {
                     if (t.stock > 0) {
-                        System.out.print("\t");
                         t.print();
                     }
                 }
+        }
+        else {
+            System.out.println("Invalid input. Try again with a task 1-9b");
         }
     }
 }
