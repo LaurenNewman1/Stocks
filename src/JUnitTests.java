@@ -14,16 +14,16 @@ public class JUnitTests {
     }
 
     void runAllProblem2(int input[][], int k, Transaction[] expected) {
-//        Transaction[] actual = Problem2.bruteForce(input, k);
-//        for (int i = 0; i < actual.length; i++)
-//            assertTransaction(expected[i], actual[i]);
-//        Transaction[] actual = Problem2.dynamic1(input, k);
-//        for (int i = 0; i < actual.length; i++)
-//            assertTransaction(expected[i], actual[i]);
-//        Transaction[] actual = Problem2.dynamic2BU(input, k);
-//        for (int i = 0; i < actual.length; i++)
-//            assertTransaction(expected[i], actual[i]);
-        Transaction[] actual = Problem2.dynamic2Mem(input, k);
+        Transaction[] actual = Problem2.bruteForce(input, k);
+        for (int i = 0; i < actual.length; i++)
+            assertTransaction(expected[i], actual[i]);
+        actual = Problem2.dynamic1(input, k);
+        for (int i = 0; i < actual.length; i++)
+            assertTransaction(expected[i], actual[i]);
+        actual = Problem2.dynamic2BU(input, k);
+        for (int i = 0; i < actual.length; i++)
+            assertTransaction(expected[i], actual[i]);
+        actual = Problem2.dynamic2Mem(input, k);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
     }
@@ -216,9 +216,9 @@ public class JUnitTests {
 
     @Test
     void p2_evaluation_plot1() {
-        int m[] = {10, 10, 10, 10, 10};
-        int n[] = {100, 200, 300, 400, 500};
-        int k[] = {10, 10, 10, 10, 10};
+        int m[] = {5, 5, 5, 5, 5};
+        int n[] = {5, 10, 15, 20, 25};
+        int k[] = {5, 5, 5, 5, 5};
         evaluate_prob2(m, n, k);
     }
 
@@ -226,15 +226,15 @@ public class JUnitTests {
     void p2_evaluation_plot2() {
         int m[] = {100, 200, 300, 400, 500};
         int n[] = {10, 10, 10, 10, 10};
-        int k[] = {10, 10, 10, 10, 10};
+        int k[] = {5, 5, 5, 5, 5};
         evaluate_prob2(m, n, k);
     }
 
     @Test
     void p2_evaluation_plot3() {
-        int m[] = {100, 100, 100, 100, 100};
-        int n[] = {100, 100, 100, 100, 100};
-        int k[] = {10, 30, 50, 70, 90};
+        int m[] = {10, 10, 10, 10, 10};
+        int n[] = {15, 15, 15, 15, 15};
+        int k[] = {2, 4, 6, 8, 10};
         evaluate_prob2(m, n, k);
     }
 

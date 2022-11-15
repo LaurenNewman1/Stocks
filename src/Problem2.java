@@ -2,8 +2,6 @@ public class Problem2 {
 
     public static Transaction[] bruteForce(int[][] stocks, int k) {
         Transaction[] opt = bruteRecur(stocks, 0, k, 0, new Transaction[k], new Transaction[k]);
-        for (Transaction t : opt)
-            t.print();
         return opt;
     }
     private static Transaction[] bruteRecur(int[][] stocks, int lastSellDay, int k, int soFar, Transaction[] txns, Transaction[] finTxns) {
@@ -62,7 +60,6 @@ public class Problem2 {
 
     static Cache A;
     public static Transaction[] dynamic2Mem(int[][] stocks, int k) {
-        int m = stocks.length;
         int n = stocks[0].length;
         // Init
         A = new Cache(k + 1, n);
@@ -102,7 +99,8 @@ public class Problem2 {
                 if (totProfit > A.maxProfit[k][j - 1]) {
                     A.maxProfit[k][j] = totProfit;
                     A.dpTxn[k][j] = maxTrans;
-                } else {
+                }
+                else {
                     A.maxProfit[k][j] = A.maxProfit[k][j - 1];
                     A.dpTxn[k][j] = A.dpTxn[k][j - 1];
                 }
