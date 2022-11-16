@@ -6,6 +6,7 @@ public class Transaction {
     public int sellDay;
     public int profit;
     public int[] cacheRef;
+    public int prevIdx;
 
     Transaction() {
         this.stock = 0;
@@ -21,6 +22,14 @@ public class Transaction {
         this.sellDay = sellDay;
         this.profit = profit;
         this.cacheRef = new int[]{cacheRef[0], cacheRef[1]};
+    }
+
+    Transaction(int stock, int buyDay, int sellDay, int profit, int prevIdx) {
+        this.stock = stock;
+        this.buyDay = buyDay;
+        this.sellDay = sellDay;
+        this.profit = profit;
+        this.prevIdx = prevIdx;
     }
 
     Transaction(int stock, int buyDay, int sellDay, int profit) {

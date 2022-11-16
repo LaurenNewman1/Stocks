@@ -31,12 +31,12 @@ public class JUnitTests {
     }
 
     void runAllProblem3(int input[][], int c, List<Transaction> expected) {
-        List<Transaction> actual = Problem3.bruteForce(input, c);
-        for (int i = 0; i < actual.size(); i++)
-            assertTransaction(expected.get(i), actual.get(i));
-//        actual = Problem3.dynamic1(input, c);
+//        List<Transaction> actual = Problem3.bruteForce(input, c);
 //        for (int i = 0; i < actual.size(); i++)
 //            assertTransaction(expected.get(i), actual.get(i));
+        List<Transaction> actual = Problem3.dynamic1(input, c);
+        for (int i = 0; i < actual.size(); i++)
+            assertTransaction(expected.get(i), actual.get(i));
 //        actual = Problem3.dynamic2BU(input, c);
 //        for (int i = 0; i < actual.size(); i++)
 //            assertTransaction(expected.get(i), actual.get(i));
