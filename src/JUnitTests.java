@@ -37,9 +37,9 @@ public class JUnitTests {
         List<Transaction> actual = Problem3.dynamic1(input, c);
         for (int i = 0; i < actual.size(); i++)
             assertTransaction(expected.get(i), actual.get(i));
-//        actual = Problem3.dynamic2BU(input, c);
-//        for (int i = 0; i < actual.size(); i++)
-//            assertTransaction(expected.get(i), actual.get(i));
+        actual = Problem3.dynamic2BU(input, c);
+        for (int i = 0; i < actual.size(); i++)
+            assertTransaction(expected.get(i), actual.get(i));
 //        actual = Problem3.dynamic2Mem(input, c);
 //        for (int i = 0; i < actual.size(); i++)
 //            assertTransaction(expected.get(i), actual.get(i));
@@ -129,10 +129,10 @@ public class JUnitTests {
                 { 1, 2, 3, 4, 3}
         };
         List<Transaction> expected = new ArrayList<>();
+        expected.add(new Transaction(1, 3, 4, 7));
         expected.add(new Transaction(2, 0, 1, 1));
         expected.add(new Transaction(0, 1, 2,4));
         expected.add(new Transaction(0, 2, 3, 4));
-        expected.add(new Transaction(1, 3, 4, 7));
         runAllProblem3(stocks, c, expected);
     }
 
