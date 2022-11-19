@@ -4,33 +4,56 @@ import java.util.List;
 
 public class Problem3 {
 
-    public static List<Transaction> bruteForce(int[][] stocks, int c) {
-        List<Transaction> opt = bruteRecur(stocks, 0, c, 0, new ArrayList<>(), new ArrayList<>());
-        return opt;
-    }
-    private static List<Transaction> bruteRecur(int[][] stocks, int start, int c, int soFar, List<Transaction> txns, List<Transaction> finTxns) {
+    private static Bank recursive(int stocks[][], int c, int i, int j, boolean buyFlag, List<Transaction> txns) {
         int m = stocks.length;
         int n = stocks[0].length;
-        if (start == n - 1) {
-            if (soFar > Transaction.getProfit(finTxns)) {
-                finTxns = new ArrayList<>(txns);
-            }
-            return finTxns;
-        }
-        for (int j1 = start; j1 < n; j1++) {
-            for (int j2 = j1 + 1; j2 < n; j2++) {
-                Transaction maxTrans = new Transaction();
-                for (int i = 0; i < m; i++) {
-                    if (stocks[i][j2] - stocks[i][j1] > maxTrans.profit) {
-                        maxTrans = new Transaction(i, j1, j2, stocks[i][j2] - stocks[i][j1]);
-                    }
+        if (i >= m || j >= n)
+            return new Bank(txns, 0);
+        int profit = 0;
+        List<Transaction> mTxns = new ArrayList<>(txns);
+        if (buyFlag) {
+            for (int k = i; k < m; k++) {
+                Bank notBuy = recursive(stocks, c, k, j + 1, true, txns);
+                List<Transaction> buyTxns = new ArrayList<>(txns);
+                buyTxns.add(new Transaction(k, j, 0, -stocks[k][j]));
+                Bank buy = recursive(stocks, c, k, j + 1, false, buyTxns);
+                buy.profit -= stocks[k][j];
+                if (buy.profit > profit) {
+                    mTxns = buy.txns;
+                    profit = buy.profit;
                 }
-                txns.add(maxTrans);
-                finTxns = bruteRecur(stocks, j2 + c, c, soFar + maxTrans.profit, txns, finTxns);
+                if (notBuy.profit > profit) {
+                    mTxns = notBuy.txns;
+                    profit = notBuy.profit;
+                }
             }
         }
-        return finTxns;
+        else {
+            Bank notSell = recursive(stocks, c, i, j + 1, false, txns);
+            int lastIndex = txns.size() - 1;
+            List<Transaction> sellTxns = new ArrayList<>(txns);
+            sellTxns.add(new Transaction(i, txns.get(lastIndex).buyDay, j, stocks[i][j] - stocks[i][txns.get(lastIndex).buyDay]));
+            sellTxns.remove(lastIndex);
+            Bank sell = recursive(stocks, c, 0, j + c, true, sellTxns);
+            sell.profit += stocks[i][j];
+            if (sell.profit > profit) {
+                mTxns = sell.txns;
+                profit = sell.profit;
+            }
+            if (notSell.profit > profit) {
+                mTxns = notSell.txns;
+                profit = notSell.profit;
+            }
+        }
+        return new Bank(mTxns, profit);
     }
+
+    public static List<Transaction> bruteForce(int[][] stocks, int c) {
+        Bank opt = recursive(stocks, c, 0, 0, true, new ArrayList<>());
+        System.out.print("Profit: " + opt.profit);
+        return opt.txns;
+    }
+
     public static List<Transaction> dynamic1(int[][] stocks, int c) {
         int m = stocks.length;
         int n = stocks[0].length;
@@ -68,6 +91,10 @@ public class Problem3 {
 
     public static List<Transaction> dynamic2Mem(int[][] stocks, int c) {
         throw new UnsupportedOperationException();
+    }
+
+    private static void memoize (int[][] stocks, int c) {
+
     }
 
     public static List<Transaction> dynamic2BU(int[][] stocks, int c) {

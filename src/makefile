@@ -12,7 +12,8 @@ CLASSES = \
 		  Problem1.java \
 		  Problem2.java \
 		  Problem3.java \
-		  Transaction.java
+		  Transaction.java \
+		  Bank.java
 
 default: classes jar
 

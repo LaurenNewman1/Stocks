@@ -17,32 +17,49 @@ public class JUnitTests {
 
     void runAllProblem2(int input[][], int k, Transaction[] expected) {
         Transaction[] actual = Problem2.bruteForce(input, k);
+        assertEquals(expected.length, actual.length);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
         actual = Problem2.dynamic1(input, k);
+        assertEquals(expected.length, actual.length);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
         actual = Problem2.dynamic2BU(input, k);
+        assertEquals(expected.length, actual.length);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
         actual = Problem2.dynamic2Mem(input, k);
+        assertEquals(expected.length, actual.length);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
     }
 
     void runAllProblem3(int input[][], int c, List<Transaction> expected) {
-//        List<Transaction> actual = Problem3.bruteForce(input, c);
-//        for (int i = 0; i < actual.size(); i++)
-//            assertTransaction(expected.get(i), actual.get(i));
-        List<Transaction> actual = Problem3.dynamic1(input, c);
-        for (int i = 0; i < actual.size(); i++)
-            assertTransaction(expected.get(i), actual.get(i));
-        actual = Problem3.dynamic2BU(input, c);
-        for (int i = 0; i < actual.size(); i++)
-            assertTransaction(expected.get(i), actual.get(i));
+        System.out.println("Expected:");
+        for (Transaction t : expected)
+            t.print();
+        List<Transaction> actual = Problem3.bruteForce(input, c);
+        System.out.println("\nActual:");
+        for (Transaction t : actual)
+            t.print();
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++)
+            assertContains(actual, expected.get(i));
+//        List<Transaction> actual = Problem3.dynamic1(input, c);
+//        assertEquals(expected.size(), actual.size());
+//        for (int i = 0; i < expected.size(); i++)
+//            assertContains(actual, expected.get(i));
+//        actual = Problem3.dynamic2BU(input, c);
+//        System.out.println("\nActual:");
+//        for (Transaction t : actual)
+//            t.print();
+//        assertEquals(expected.size(), actual.size());
+//        for (int i = 0; i < expected.size(); i++)
+//            assertContains(actual, expected.get(i));
 //        actual = Problem3.dynamic2Mem(input, c);
-//        for (int i = 0; i < actual.size(); i++)
-//            assertTransaction(expected.get(i), actual.get(i));
+//        assertEquals(expected.size(), actual.size());
+//        for (int i = 0; i < expected.size(); i++)
+//            assertContains(actual, expected.get(i));
     }
 
     void assertTransaction(Transaction a, Transaction b) {
@@ -53,7 +70,19 @@ public class JUnitTests {
         assertEquals(a.stock, b.stock);
         assertEquals(a.buyDay, b.buyDay);
         assertEquals(a.sellDay, b.sellDay);
-        assertEquals(a.profit, b.profit);
+        //assertEquals(a.profit, b.profit);
+    }
+
+    void assertContains(List<Transaction> list, Transaction b) {
+        System.out.print("Testing: ");
+        b.print();
+        boolean contains = false;
+        for (Transaction a : list) {
+            if (a.stock == b.stock && a.buyDay == b.buyDay && a.sellDay == b.sellDay) {
+                contains = true;
+            }
+        }
+        assertEquals(true, contains);
     }
 
     @Test
@@ -121,7 +150,8 @@ public class JUnitTests {
     }
 
     @Test
-    void p3_test2() {
+    // HAS MULTIPLE RIGHT ANSWERS
+    void p3_test2_option1() {
         int c = 0;
         int stocks[][] = {
                 { 5, 2, 6, 10, 2},
@@ -129,10 +159,25 @@ public class JUnitTests {
                 { 1, 2, 3, 4, 3}
         };
         List<Transaction> expected = new ArrayList<>();
-        expected.add(new Transaction(1, 3, 4, 7));
+        expected.add(new Transaction(1, 3, 4, 6));
+        expected.add(new Transaction(2, 0, 1, 1));
+        expected.add(new Transaction(0, 1, 3,8));
+        runAllProblem3(stocks, c, expected);
+    }
+
+    @Test
+    void p3_test2_option2() {
+        int c = 0;
+        int stocks[][] = {
+                { 5, 2, 6, 10, 2},
+                { 2, 1, 5, 3, 9},
+                { 1, 2, 3, 4, 3}
+        };
+        List<Transaction> expected = new ArrayList<>();
+        expected.add(new Transaction(1, 3, 4, 6));
         expected.add(new Transaction(2, 0, 1, 1));
         expected.add(new Transaction(0, 1, 2,4));
-        expected.add(new Transaction(0, 2, 3, 4));
+        expected.add(new Transaction(0, 2, 3,4));
         runAllProblem3(stocks, c, expected);
     }
 
