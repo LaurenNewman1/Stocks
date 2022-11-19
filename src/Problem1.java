@@ -89,46 +89,36 @@ public class Problem1 {
     }
 
     public static Transaction dynamicBU(int[][] stocks) {
-        int m = stocks.length;
-        int n = stocks[0].length;
-        Cache A = new Cache(m, n);
-        Transaction[] opts = new Transaction[m];
-        for (int i = 0; i < m; i++) {
-            opts[i] = new Transaction();
-            A.minCost[i][0] = stocks[i][0];
-            A.maxProfit[i][0] = -1 * A.minCost[i][0];
-        }
-        for (int i = 0; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                // Select the one that will be traded
-                if (A.minCost[i][j - 1] <= stocks[i][j]) {
-                    A.minCost[i][j] = A.minCost[i][j - 1];
+        int days = stocks[0].length;
+        if (days < 2)
+            return null;
+        int maxProfit = 0;
+        Transaction txn = new Transaction();
+        for (int i = 0; i < stocks.length; i++) {
+            int previousBuyValue = -stocks[i][0];
+            int previousSellValue = 0;
+            int currentBuyValue = 0;
+            int currentSellValue = 0;
+            int buyDay = 0;
+            int saleDay = 0;
+            int tempPurchaseDay = 0;
+            for (int day = 1; day < days; day++) {
+                currentSellValue = Math.max(previousSellValue, previousBuyValue + stocks[i][day]);
+                if (currentSellValue > previousSellValue) {
+                    buyDay = tempPurchaseDay;
+                    saleDay = day;
                 }
-                else { // Buy it
-                    A.minCost[i][j] = stocks[i][j];
-                    opts[i].stock = i;
-                    opts[i].buyDay = j;
-
-                }
-                // Select the final purhcase
-                if (A.maxProfit[i][j - 1] >= stocks[i][j] - A.minCost[i][j - 1]) {
-                    A.maxProfit[i][j] = A.maxProfit[i][j - 1];
-                }
-                else { // Sell current and buy this
-                    A.maxProfit[i][j] = stocks[i][j] - A.minCost[i][j - 1];
-                    opts[i].sellDay = j;
-                    opts[i].profit = A.maxProfit[i][j];
-                }
+                currentBuyValue = Math.max(previousBuyValue, -stocks[i][day]);
+                if (currentBuyValue > previousBuyValue)
+                    tempPurchaseDay = day;
+                previousBuyValue = currentBuyValue;
+                previousSellValue = currentSellValue;
+            }
+            if (previousSellValue > maxProfit) {
+                maxProfit = previousSellValue;
+                txn = new Transaction(i, buyDay, saleDay, stocks[i][saleDay] - stocks[i][buyDay]);
             }
         }
-        Transaction opt = opts[0];
-        for (int i = 1; i < m; i++) {
-            if (opts[i].profit > opt.profit)
-                opt = opts[i];
-        }
-        opt.print();
-        System.out.println(opt.profit);
-        A.print();
-        return opt;
+        return txn;
     }
 }
