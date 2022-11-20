@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Problem3 {
 
@@ -90,11 +88,67 @@ public class Problem3 {
     }
 
     public static List<Transaction> dynamic2Mem(int[][] stocks, int c) {
-        throw new UnsupportedOperationException();
+        int m = stocks.length;
+        int n = stocks[0].length;
+        int[][][] memo = new int[m][n][2];
+        // init
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < 2; k++) {
+                    memo[i][j][k] = Integer.MIN_VALUE;
+                }
+            }
+        }
+        Bank[][][] memoTxn = new Bank[m][n][2];
+        // buyFlag is 1 for buy, 0 for sell
+        Bank bank = memoize(stocks, c, 0, 0, 1, memoTxn, memo);
+        return bank.txns;
     }
 
-    private static void memoize (int[][] stocks, int c) {
-
+    private static Bank memoize(int[][] stocks, int c, int stock, int day, int buyFlag, Bank[][][] memoTxn, int[][][] memo) {
+        int m = stocks.length;
+        int n = stocks[0].length;
+        if (stock >= m || day >=n)
+            return new Bank(new ArrayList<>(), 0);
+        if (memo[stock][day][buyFlag] != Integer.MIN_VALUE)
+            return new Bank(memoTxn[stock][day][buyFlag].txns, memo[stock][day][buyFlag]);
+        int profit = 0;
+        List<Transaction> mTxns = new ArrayList<>();
+        if (buyFlag == 1) {
+            for (int k = stock; k < m; k++) {
+                Bank buy = memoize(stocks, c, k, day + 1, 0, memoTxn, memo);
+                buy.profit -= stocks[k][day];
+                Bank notBuy = memoize(stocks, c, k, day + 1, 1, memoTxn, memo);
+                if (buy.profit > profit) {
+                    Transaction last = buy.txns.get(buy.txns.size() - 1);
+                    buy.txns.remove(buy.txns.size() - 1);
+                    buy.txns.add(new Transaction(k, day, last.sellDay, stocks[k][last.sellDay] - stocks[k][day]));
+                    mTxns = buy.txns;
+                    profit = buy.profit;
+                }
+                if (notBuy.profit > profit) {
+                    mTxns = notBuy.txns;
+                    profit = notBuy.profit;
+                }
+            }
+        }
+        else {
+            Bank sell = memoize(stocks, c, 0, day + c, 1, memoTxn, memo);
+            sell.profit += stocks[stock][day];
+            Bank notSell = memoize(stocks, c, stock, day + 1, 0, memoTxn, memo);
+            if (sell.profit > profit) {
+                sell.txns.add(new Transaction(stock, 0, day, stocks[stock][day] - stocks[stock][0]));
+                mTxns = sell.txns;
+                profit = sell.profit;
+            }
+            if (notSell.profit > profit) {
+                mTxns = notSell.txns;
+                profit = notSell.profit;
+            }
+        }
+        memo[stock][day][buyFlag] = profit;
+        memoTxn[stock][day][buyFlag] = new Bank(mTxns, profit);
+        return new Bank(mTxns, profit);
     }
 
     public static List<Transaction> dynamic2BU(int[][] stocks, int c) {

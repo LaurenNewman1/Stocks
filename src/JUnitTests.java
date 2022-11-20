@@ -38,13 +38,13 @@ public class JUnitTests {
         System.out.println("Expected:");
         for (Transaction t : expected)
             t.print();
-        List<Transaction> actual = Problem3.bruteForce(input, c);
-        System.out.println("\nActual:");
-        for (Transaction t : actual)
-            t.print();
-        assertEquals(expected.size(), actual.size());
-        for (int i = 0; i < expected.size(); i++)
-            assertContains(actual, expected.get(i));
+//        List<Transaction> actual = Problem3.bruteForce(input, c);
+//        System.out.println("\nActual:");
+//        for (Transaction t : actual)
+//            t.print();
+//        assertEquals(expected.size(), actual.size());
+//        for (int i = 0; i < expected.size(); i++)
+//            assertContains(actual, expected.get(i));
 //        List<Transaction> actual = Problem3.dynamic1(input, c);
 //        assertEquals(expected.size(), actual.size());
 //        for (int i = 0; i < expected.size(); i++)
@@ -56,10 +56,13 @@ public class JUnitTests {
 //        assertEquals(expected.size(), actual.size());
 //        for (int i = 0; i < expected.size(); i++)
 //            assertContains(actual, expected.get(i));
-//        actual = Problem3.dynamic2Mem(input, c);
-//        assertEquals(expected.size(), actual.size());
-//        for (int i = 0; i < expected.size(); i++)
-//            assertContains(actual, expected.get(i));
+        List<Transaction> actual = Problem3.dynamic2Mem(input, c);
+        System.out.println("\nActual:");
+        for (Transaction t : actual)
+            t.print();
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++)
+            assertContains(actual, expected.get(i));
     }
 
     void assertTransaction(Transaction a, Transaction b) {
