@@ -236,21 +236,29 @@ public class JUnitTests {
         for (int i = 0; i < 5; i++) {
             // Setup randomized stocks
             int[][] stocks = getRandomStocks(m[i], n[i]);
+            // dummy
+            Problem1.bruteForce(stocks);
             // Brute Force
             long start = System.nanoTime();
             Problem1.bruteForce(stocks);
             long finish = System.nanoTime();
             bruteTime[i] = finish - start;
+            // dummy
+            Problem1.greedy(stocks);
             // Greedy
             start = System.nanoTime();
             Problem1.greedy(stocks);
             finish = System.nanoTime();
             greedyTime[i] = finish - start;
+            // dummy
+            Problem1.dynamicMem(stocks);
             // Dynamic Memoization
             start = System.nanoTime();
             Problem1.dynamicMem(stocks);
             finish = System.nanoTime();
             dynamicMemTime[i] = finish - start;
+            // dummy
+            Problem1.dynamicBU(stocks);
             // Dynamic Bottom Up
             start = System.nanoTime();
             Problem1.dynamicBU(stocks);
@@ -285,7 +293,7 @@ public class JUnitTests {
         evaluate_prob1(m, n);
     }
 
-    void evaluate_prob2(int m[], int n[], int k[]) {
+    void evaluate_prob2(int m[], int n[], int k[]) throws Exception{
         long bruteTime[] = new long[5];
         long dynamic1Time[] = new long[5];
         long dynamic2MemTime[] = new long[5];
@@ -298,16 +306,22 @@ public class JUnitTests {
             Problem2.bruteForce(stocks, k[i]);
             long finish = System.nanoTime();
             bruteTime[i] = finish - start;
+            // dummy
+            int temp = 0;
             // Dynamic 1
             start = System.nanoTime();
             Problem2.dynamic1(stocks, k[i]);
             finish = System.nanoTime();
             dynamic1Time[i] = finish - start;
+            // dummy
+            temp = 0;
             // Dynamic 2 Memoization
             start = System.nanoTime();
             Problem2.dynamic2Mem(stocks, k[i]);
             finish = System.nanoTime();
             dynamic2MemTime[i] = finish - start;
+            // dummy
+            temp = 0;
             // Dynamic 2 Bottom Up
             start = System.nanoTime();
             Problem2.dynamic2BU(stocks, k[i]);
@@ -329,7 +343,7 @@ public class JUnitTests {
     }
 
     @Test
-    void p2_evaluation_plot1() {
+    void p2_evaluation_plot1() throws Exception{
         int m[] = {5, 5, 5, 5, 5};
         int n[] = {5, 10, 15, 20, 25};
         int k[] = {5, 5, 5, 5, 5};
@@ -337,7 +351,7 @@ public class JUnitTests {
     }
 
     @Test
-    void p2_evaluation_plot2() {
+    void p2_evaluation_plot2() throws Exception{
         int m[] = {100, 200, 300, 400, 500};
         int n[] = {10, 10, 10, 10, 10};
         int k[] = {5, 5, 5, 5, 5};
@@ -345,7 +359,7 @@ public class JUnitTests {
     }
 
     @Test
-    void p2_evaluation_plot3() {
+    void p2_evaluation_plot3() throws Exception{
         int m[] = {10, 10, 10, 10, 10};
         int n[] = {15, 15, 15, 15, 15};
         int k[] = {2, 4, 6, 8, 10};
@@ -398,8 +412,8 @@ public class JUnitTests {
     @Test
     void p3_evaluation_plot1() {
         int m[] = {10, 10, 10, 10, 10};
-        int n[] = {100, 200, 300, 400, 500};
-        int c[] = {10, 10, 10, 10, 10};
+        int n[] = {10, 20, 30, 40, 50};
+        int c[] = {5, 5, 5, 5, 5};
         evaluate_prob3(m, n, c);
     }
 

@@ -78,54 +78,55 @@ public class Problem2 {
             }
         }
         Bank[][][][] dpTxn = new Bank[m][n][k+1][2];
-        Bank bank = memoize(stocks, k, 0, 0, 1, dpTxn, dpProfit);
+        Bank bank = memoize(stocks, k, 0, 0, 0, dpTxn, dpProfit);
         return bank.txns.toArray(new Transaction[k]);
     }
 
-    private static Bank memoize(int[][] stocks, int k, int stock, int day, int buyFlag, Bank[][][][] memoTxn, int[][][][] memo) {
+    private static Bank memoize(int[][] stocks, int k, int stock, int day, int bought, Bank[][][][] memoTxn, int[][][][] memo) {
         int m = stocks.length;
         int n = stocks[0].length;
-        if (k == 0 || day >=n)
+        if (k == 0 || day == n)
             return new Bank(new ArrayList<>(), 0);
-        if (memo[stock][day][k][buyFlag] != Integer.MIN_VALUE)
-            return new Bank(memoTxn[stock][day][k][buyFlag].txns, memo[stock][day][k][buyFlag]);
-        int profit = 0;
-        List<Transaction> mTxns = new ArrayList<>();
-        if (buyFlag == 1) {
-            for (int i = stock; i < m; i++) {
-                Bank buy = memoize(stocks, k, i, day + 1, 0, memoTxn, memo);
-                buy.profit -= stocks[i][day];
-                Bank notBuy = memoize(stocks, k, i, day + 1, 1, memoTxn, memo);
-                if (buy.profit > profit) {
-                    Transaction last = buy.txns.get(buy.txns.size() - 1);
-                    buy.txns.remove(buy.txns.size() - 1);
-                    buy.txns.add(new Transaction(i, day, last.sellDay, stocks[i][last.sellDay] - stocks[i][day]));
-                    mTxns = buy.txns;
-                    profit = buy.profit;
+        List<Transaction> maxTxns = new ArrayList<>();
+        if (memo[stock][day][k][bought] == Integer.MIN_VALUE) {
+            if (bought == 1) {
+                Bank sell = memoize(stocks, k - 1, 0, day, bought == 1 ? 0 : 1, memoTxn, memo);
+                sell.profit += stocks[stock][day];
+                Bank noSell = memoize(stocks, k, stock, day + 1, bought, memoTxn, memo);
+                if (sell.profit > noSell.profit) {
+                    sell.txns.add(new Transaction(stock, 0, day, 0));
+                    maxTxns = new ArrayList<>(sell.txns);
                 }
-                if (notBuy.profit > profit) {
-                    mTxns = notBuy.txns;
-                    profit = notBuy.profit;
+                else {
+                    maxTxns = new ArrayList<>(noSell.txns);
                 }
+                memo[stock][day][k][bought] = Math.max(sell.profit, noSell.profit);
+                memoTxn[stock][day][k][bought] = new Bank(new ArrayList<>(maxTxns), memo[stock][day][k][bought]);
+            }
+            else {
+                int maxB = 0;
+                for (int i = 0; i < m; i++) {
+                    Bank buy = memoize(stocks, k, i, day + 1, bought == 1 ? 0 : 1, memoTxn, memo);
+                    buy.profit -= stocks[i][day];
+                    if (buy.profit > maxB) {
+                        Transaction last = buy.txns.get(buy.txns.size() - 1);
+                        buy.txns.remove(buy.txns.size() - 1);
+                        buy.txns.add(new Transaction(i, day, last.sellDay, 0));
+                        maxTxns = new ArrayList<>(buy.txns);
+                        maxB = buy.profit;
+                    }
+                }
+                Bank noBuy = memoize(stocks, k, stock, day + 1, bought, memoTxn, memo);
+                if (noBuy.profit > maxB) {
+                    maxTxns = new ArrayList<>(noBuy.txns);
+                    maxB = noBuy.profit;
+                }
+                memo[stock][day][k][bought] = maxB;
+                memoTxn[stock][day][k][bought] = new Bank(new ArrayList<>(maxTxns), maxB);
             }
         }
-        else {
-            Bank sell = memoize(stocks, k - 1, 0, day, 1, memoTxn, memo);
-            sell.profit += stocks[stock][day];
-            Bank notSell = memoize(stocks, k, stock, day + 1, 0, memoTxn, memo);
-            if (sell.profit > profit) {
-                sell.txns.add(new Transaction(stock, 0, day, stocks[stock][day] - stocks[stock][0]));
-                mTxns = sell.txns;
-                profit = sell.profit;
-            }
-            if (notSell.profit > profit) {
-                mTxns = notSell.txns;
-                profit = notSell.profit;
-            }
-        }
-        memo[stock][day][k][buyFlag] = profit;
-        memoTxn[stock][day][k][buyFlag] = new Bank(mTxns, profit);
-        return new Bank(mTxns, profit);
+
+        return new Bank(new ArrayList<>(memoTxn[stock][day][k][bought].txns), memo[stock][day][k][bought]);
     }
 
     public static Transaction[] dynamic2BU(int[][] stocks, int k) {
