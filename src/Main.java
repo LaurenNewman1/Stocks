@@ -1,14 +1,18 @@
+/*
+This function is the main entry point into our entire program. It functions as specified in the requirement document.
+Handles running all of the algorithms based on the User's input/
+*/
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        // Which task to run?
+        // Which task to run (Given by the User as <Stocks task>)?
         Scanner scan = new Scanner(System.in);
         String task = args[0];
 
-        // Problem 1
+        // Checking whether the user selects the tasks of Problem 1.
         if (task.equals("1") || task.equals("2") || task.equals("3a") || task.equals("3b")){
             // Take in the input and save in stocks
             int m = scan.nextInt();
@@ -19,7 +23,7 @@ public class Main {
                     stocks[i][j] = scan.nextInt();
                 }
             }
-            // Execute
+            // Execute all Problem 1 tasks based on User Input.
             Transaction optimal = new Transaction();
             switch (task) {
                 case "1":
@@ -38,7 +42,7 @@ public class Main {
             // Results
             optimal.print();
         }
-        // Problem 2
+        // Checking whether the user selects the tasks of Problem 2.
         else if (task.equals("4") || task.equals("5") || task.equals("6a") || task.equals("6b")){
             // Take in the input and save in stocks
             int k = scan.nextInt();
@@ -50,7 +54,7 @@ public class Main {
                     stocks[i][j] = scan.nextInt();
                 }
             }
-            // Execute
+            // Execute all Problem 2 tasks based on User Input.
             Transaction[] optimal = new Transaction[k];
             switch (task) {
                 case "4":
@@ -73,7 +77,7 @@ public class Main {
                 }
             }
         }
-        // Problem 3
+        // Checking whether the user selects the tasks of Problem 3.
         else if (task.equals("7") || task.equals("8") || task.equals("9a") || task.equals("9b")){
                 // Take in the input and save in stocks
                 int c = scan.nextInt();
@@ -85,7 +89,7 @@ public class Main {
                         stocks[i][j] = scan.nextInt();
                     }
                 }
-                // Execute
+                // Execute all Problem 3 tasks based on User Input.
                 List<Transaction> optimal = new ArrayList<>();
                 switch (task) {
                     case "7":
@@ -108,6 +112,7 @@ public class Main {
                     }
                 }
         }
+        //Handling the Invalid Input Case. 
         else {
             System.out.println("Invalid input. Try again with a task 1-9b");
         }
