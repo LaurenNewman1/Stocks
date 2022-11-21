@@ -207,6 +207,22 @@ public class JUnitTests {
     }
 
     @Test
+    void p2_test5() {
+        int k = 3;
+        int stocks[][] = {
+                {1, 7, 4, 0, 9},
+                {4, 8, 8, 2, 4},
+                {5, 5, 1, 7, 1}
+        };
+        Transaction[] expected = {
+                new Transaction(0, 0, 1,6),
+                new Transaction(2, 2, 3, 6),
+                new Transaction(0, 3, 4, 9)
+        };
+        runAllProblem2(stocks, k, expected);
+    }
+
+    @Test
     void p3_test3() {
         int c = 0;
         int stocks[][] = {

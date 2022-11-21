@@ -54,21 +54,21 @@ public class Main {
             Transaction[] optimal = new Transaction[k];
             switch (task) {
                 case "4":
-                    Problem2.bruteForce(stocks, k);
+                    optimal = Problem2.bruteForce(stocks, k);
                     break;
                 case "5":
-                    Problem2.dynamic1(stocks, k);
+                    optimal = Problem2.dynamic1(stocks, k);
                     break;
                 case "6a":
-                    Problem2.dynamic2Mem(stocks, k);
+                    optimal = Problem2.dynamic2Mem(stocks, k);
                     break;
                 case "6b":
-                    Problem2.dynamic2BU(stocks, k);
+                    optimal = Problem2.dynamic2BU(stocks, k);
                     break;
             }
             // Results
             for (int i = 0; i < k; i++) {
-                if (optimal[i].stock > 0) {
+                if (optimal[i] != null && optimal[i].stock > 0) {
                     optimal[i].print();
                 }
             }
@@ -89,16 +89,16 @@ public class Main {
                 List<Transaction> optimal = new ArrayList<>();
                 switch (task) {
                     case "7":
-                        Problem3.bruteForce(stocks, c);
+                        optimal = Problem3.bruteForce(stocks, c);
                         break;
                     case "8":
-                        Problem3.dynamic1(stocks, c);
+                        optimal = Problem3.dynamic1(stocks, c);
                         break;
                     case "9a":
-                        Problem3.dynamic2Mem(stocks, c);
+                        optimal = Problem3.dynamic2Mem(stocks, c);
                         break;
                     case "9b":
-                        Problem3.dynamic2BU(stocks, c);
+                        optimal = Problem3.dynamic2BU(stocks, c);
                         break;
                 }
                 // Results
