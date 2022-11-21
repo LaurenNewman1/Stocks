@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-/* This function is used to calculate the k-transaction that produces the maximum possible profit using the Brute force paradigm.
+/*
+This file contains the implementations of all the tasks associated with Problem 2.
+*/
+public class Problem2 {
+    /* This function is used to calculate the k-transaction that produces the maximum possible profit using the Brute force paradigm.
     @params: 
     Stocks: A 2D array where each row represents a different stock and each column represents a different day.
     m - number of stocks.
@@ -10,8 +14,6 @@ import java.util.List;
     @returns : A transaction containing a list of k transactions that contains the information regarding the maximum profit generating transaction in the form
    [<Stockname, Buyday, SellDay>]
     */
-public class Problem2 {
-
     public static Transaction[] bruteForce(int[][] stocks, int k) {
         //Call to the recursion function.
         Transaction[] opt = bruteRecur(stocks, 0, k, 0, new Transaction[k], new Transaction[k]);
