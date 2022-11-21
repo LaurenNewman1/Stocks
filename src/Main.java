@@ -68,7 +68,7 @@ public class Main {
             }
             // Results
             for (int i = 0; i < k; i++) {
-                if (optimal[i] != null && optimal[i].stock > 0) {
+                if (optimal[i] != null) {
                     optimal[i].print();
                 }
             }
@@ -103,7 +103,7 @@ public class Main {
                 }
                 // Results
                 for (Transaction t : optimal) {
-                    if (t.stock > 0) {
+                    if (t != null) {
                         t.print();
                     }
                 }
