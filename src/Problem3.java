@@ -32,7 +32,7 @@ public class Problem3 {
             List<Transaction> sellTxns = new ArrayList<>(txns);
             sellTxns.add(new Transaction(i, txns.get(lastIndex).buyDay, j, stocks[i][j] - stocks[i][txns.get(lastIndex).buyDay]));
             sellTxns.remove(lastIndex);
-            Bank sell = recursive(stocks, c, 0, j + c, true, sellTxns);
+            Bank sell = recursive(stocks, c, 0, j + c + 1, true, sellTxns);
             sell.profit += stocks[i][j];
             if (sell.profit > profit) {
                 mTxns = sell.txns;
@@ -70,9 +70,9 @@ public class Problem3 {
             for (int j = 0; j < i; j++) {
                 int prev = 0;
                 int prevTxn = 0;
-                if (j >= c) {
-                    prev = dp[j - c];
-                    prevTxn = j - c;
+                if (j >= c + 1) {
+                    prev = dp[j - c - 1];
+                    prevTxn = j - c - 1;
                 }
                 for (int k = 0; k < m; k++) {
                     int profit = prev + stocks[k][i] - stocks[k][j];
@@ -132,7 +132,7 @@ public class Problem3 {
             }
         }
         else {
-            Bank sell = memoize(stocks, c, 0, day + c, 1, memoTxn, memo);
+            Bank sell = memoize(stocks, c, 0, day + c + 1, 1, memoTxn, memo);
             sell.profit += stocks[stock][day];
             Bank notSell = memoize(stocks, c, stock, day + 1, 0, memoTxn, memo);
             if (sell.profit > profit) {
@@ -196,9 +196,9 @@ public class Problem3 {
                         dp[i] = dpK[k][i];
                         dpTxns[i] = dpKTxns[k][i];
                     }
-                    if (i > c && dp[i - c] - stocks[k][i] > maxDiff[k]){
-                        maxDiff[k] = dp[i - c] - stocks[k][i];
-                        maxDiffDay[k] = new int[]{i, i - c};
+                    if (i > c && dp[i - c - 1] - stocks[k][i] > maxDiff[k]){
+                        maxDiff[k] = dp[i - c - 1] - stocks[k][i];
+                        maxDiffDay[k] = new int[]{i, i - c - 1};
                     }
                 }
             }
