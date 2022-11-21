@@ -48,7 +48,6 @@ public class Problem3 {
 
     public static List<Transaction> bruteForce(int[][] stocks, int c) {
         Bank opt = recursive(stocks, c, 0, 0, true, new ArrayList<>());
-        System.out.print("Profit: " + opt.profit);
         return opt.txns;
     }
 
@@ -197,7 +196,7 @@ public class Problem3 {
                         dp[i] = dpK[k][i];
                         dpTxns[i] = dpKTxns[k][i];
                     }
-                    if (dp[i - c] - stocks[k][i] > maxDiff[k]){
+                    if (i > c && dp[i - c] - stocks[k][i] > maxDiff[k]){
                         maxDiff[k] = dp[i - c] - stocks[k][i];
                         maxDiffDay[k] = new int[]{i, i - c};
                     }

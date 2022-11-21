@@ -191,6 +191,22 @@ public class JUnitTests {
     }
 
     @Test
+    void p2_test4() {
+        int k = 2;
+        int stocks[][] = {
+                { 1, 5, 1},
+                { 1, 1, 6},
+                { 1, 5, 1},
+                { 1, 1, 6},
+        };
+        Transaction[] expected = {
+                new Transaction(1, 1, 2,5),
+                new Transaction(0, 0, 1, 4)
+        };
+        runAllProblem2(stocks, k, expected);
+    }
+
+    @Test
     void p3_test3() {
         int c = 0;
         int stocks[][] = {
@@ -374,21 +390,28 @@ public class JUnitTests {
         for (int i = 0; i < 5; i++) {
             // Setup randomized stocks
             int[][] stocks = getRandomStocks(m[i], n[i]);
+            int[][] bruteStocks = getRandomStocks(m[i] / 50, n[i]);
             // Brute Force
             long start = System.nanoTime();
-            Problem3.bruteForce(stocks, c[i]);
+            Problem3.bruteForce(bruteStocks, c[i]);
             long finish = System.nanoTime();
             bruteTime[i] = finish - start;
+            // dummy
+            int temp = 0;
             // Dynamic 1
             start = System.nanoTime();
             Problem3.dynamic1(stocks, c[i]);
             finish = System.nanoTime();
             dynamic1Time[i] = finish - start;
+            // dummy
+            temp = 0;
             // Dynamic 2 Memoization
             start = System.nanoTime();
             Problem3.dynamic2Mem(stocks, c[i]);
             finish = System.nanoTime();
             dynamic2MemTime[i] = finish - start;
+            // dummy
+            temp = 0;
             // Dynamic 2 Bottom Up
             start = System.nanoTime();
             Problem3.dynamic2BU(stocks, c[i]);
@@ -412,7 +435,7 @@ public class JUnitTests {
     @Test
     void p3_evaluation_plot1() {
         int m[] = {10, 10, 10, 10, 10};
-        int n[] = {10, 20, 30, 40, 50};
+        int n[] = {100, 200, 300, 400, 500};
         int c[] = {5, 5, 5, 5, 5};
         evaluate_prob3(m, n, c);
     }
