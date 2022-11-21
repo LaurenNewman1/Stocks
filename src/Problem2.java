@@ -15,6 +15,8 @@ public class Problem2 {
    [<Stockname, Buyday, SellDay>]
     */
     public static Transaction[] bruteForce(int[][] stocks, int k) {
+        if (k >= stocks[0].length)
+            k = stocks[0].length;
         //Call to the recursion function.
         Transaction[] opt = bruteRecur(stocks, 0, k, 0, new Transaction[k], new Transaction[k]);
         return opt;
