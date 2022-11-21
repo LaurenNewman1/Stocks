@@ -20,6 +20,12 @@ public class JUnitTests {
         for (Transaction t : expected)
             t.print();
         Transaction[] actual = Problem2.bruteForce(input, k);
+        System.out.println("\nActual:");
+        for (Transaction t : actual)
+            if (t != null)
+                t.print();
+            else
+                System.out.println("Null");
         assertEquals(expected.length, actual.length);
         for (int i = 0; i < actual.length; i++)
             assertTransaction(expected[i], actual[i]);
@@ -146,7 +152,7 @@ public class JUnitTests {
 
     @Test
     void p2_test3() {
-        int k = 2;
+        int k = 4;
         int stocks[][] = {
                 { 1, 5, 1},
                 { 1, 1, 6}
